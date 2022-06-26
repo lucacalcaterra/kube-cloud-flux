@@ -23,6 +23,11 @@ spec:
       retries: 3
   values:
     baseDomain: "netmaker.${SECRET_DOMAIN}"
+    postgresql-ha:
+      postgresql:
+        database: "netmaker"
+        username: "netmaker"
+        password: "netmaker"
     ingress:
       enabled: true
       ingressClassName: "traefik"
