@@ -23,3 +23,23 @@ spec:
       retries: 3
   values:
     baseDomain: "netmaker.${SECRET_DOMAIN}"
+    ingress:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
+        external-dns/is-public: "true"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "weather-sunset"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        #traefik.ingress.kubernetes.io/router.middlewares: default-basicauth@kubernetescrd
+      hosts:
+        - host: "netmaker.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - "netmaker.${SECRET_DOMAIN}"
+          secretName: "netmaker-tls"
